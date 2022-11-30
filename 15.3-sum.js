@@ -10,31 +10,24 @@
  * @return {number[][]}
  */
 var threeSum = function (nums) {
-    let ans = [];
-    //sort asc
     nums = nums.sort((a, b) => a - b);
-    for (let i = 0; i < nums.length; i++) {
-        if (nums[i - 1] == nums[i]) {
-            //duplicate
-            continue;
-        }
-        //let 3sum become 2sum question
-        let target = nums[i] * -1;
-        let front = i + 1;
-        let back = nums.length - 1;
-        while (front < back) {
-            if (target > nums[front] + nums[back]) {
-                front++;
-            } else if (target < nums[front] + nums[back]) {
-                back--;
-            } else {
-                //filter the duplicate
-                while (nums[front] == nums[front + 1]) front++;
-                while (nums[back] == nums[back - 1]) back--;
-                ans.push([nums[i], nums[front], nums[back]]);
-                front++;
-                back--;
-            }
+    let ans = [];
+
+    //because it need at least three elements, so end with len-3
+    for (let i = 0; i < nums.length - 2; i++) {
+        if (nums[i - 1] === nums[i]) continue;
+        let L = i + 1;
+        let R = nums.length - 1;
+        while (L < R) {
+            if (nums[L] + nums[R] + nums[i] < 0) L++;
+            else if (nums[L] + nums[R] + nums[i] > 0) R--;
+            else {
+                while (nums[L] === nums[L + 1]) L++;
+                while (nums[R] === nums[R - 1]) R--;
+                ans.push([nums[i], nums[L], nums[R]]);
+                L++;
+                R--;
+            };
         }
     }
     return ans;

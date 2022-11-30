@@ -10,15 +10,17 @@
  * @return {number}
  */
 var maxArea = function (height) {
-    let front = 0;
-    let back = height.length - 1;
     let max = 0;
-    while (front < back) {
-        max = Math.max(max, Math.min(height[front], height[back]) * (back - front));
-        if(height[front] > height[back]) back--;
-        else front++;
+    let L = 0;
+    let R = height.length - 1;
+    while (L < R) {
+        max = Math.max(Math.min(height[L], height[R]) * (R - L), max);
+        if (height[L] > height[R]) R--;
+        else L++;
     }
     return max;
 };
+// console.log(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]));
+// console.log(maxArea([1, 1]));
 // @lc code=end
 
